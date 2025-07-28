@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我们的照片墙</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <style>
+        /* 仅用于照片墙页面的额外样式 */
+        body {
+            background-color: #fdf6f8; /* 淡粉色背景 */
+            overflow: auto; /* 允许页面滚动 */
+        }
+        .gallery-header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .gallery-header h1 {
+            font-size: 3em;
+            color: #e91e63;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 响应式网格布局 */
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .photo-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* 隐藏超出部分 */
+        }
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .photo-card .caption {
+            padding: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-header">
+        <h1>我们的甜蜜瞬间</h1>
+        <p>每一张照片，都是一个爱的故事。</p>
+        <a href="index.html" class="back-link">返回首页</a>
+    </div>
+
+    <div class="gallery-grid">
+        <div class="photo-card">
+            <img src="images/your-photo-1.jpg" alt="我们的照片1">
+            <div class="caption">
+                <p>2023.05.20 - 第一次一起去海边，风很甜。</p>
+            </div>
+        </div>
+
+        <div class="photo-card">
+            <img src="images/your-photo-2.jpg" alt="我们的照片2">
+            <div class="caption">
+                <p>为我做的爱心早餐！</p>
+            </div>
+        </div>
+
+        <div class="photo-card">
+            <img src="images/your-photo-3.png" alt="我们的照片3">
+            <div class="caption">
+                <p>纪念日收到的花~</p>
+            </div>
+        </div>
+
+        <div class="photo-card">
+            <img src="images/another-photo.jpeg" alt="我们的照片4">
+            <div class="caption">
+                <p>一起看电影的票根。</p>
+            </div>
+        </div>
+
+        </div>
+
+</body>
+</html>
