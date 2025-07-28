@@ -1,3 +1,7 @@
+---
+# 这个 --- 标记是告诉 GitHub 使用 Jekyll 来处理这个文件
+layout: null
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,90 +9,82 @@
     <title>我们的照片墙</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <style>
-        /* 仅用于照片墙页面的额外样式 */
-        body {
-            background-color: #fdf6f8; /* 淡粉色背景 */
-            overflow: auto; /* 允许页面滚动 */
-        }
-        .gallery-header {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .gallery-header h1 {
-            font-size: 3em;
-            color: #e91e63;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 响应式网格布局 */
-            gap: 15px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .photo-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* 隐藏超出部分 */
-        }
-        .photo-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .photo-card .caption {
-            padding: 15px;
-            font-size: 0.9em;
-            color: #555;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #e91e63;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        html { scroll-behavior: smooth; }
+        body { background-color: #fdf6f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; padding-top: 60px; }
+        .gallery-header { text-align: center; padding: 40px 20px; }
+        .gallery-header h1 { font-size: 3em; color: #e91e63; }
+        .page-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .date-nav { width: 200px; flex-shrink: 0; position: sticky; top: 80px; align-self: flex-start; height: calc(100vh - 100px); overflow-y: auto; }
+        .date-nav h4 { font-size: 1.2em; color: #333; margin-top: 0; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+        .date-nav ul { list-style: none; padding: 0; margin: 0; }
+        .date-nav .year-link > a { font-weight: bold; font-size: 1.1em; color: #e91e63; }
+        .date-nav .month-link { padding-left: 20px; }
+        .date-nav a { text-decoration: none; color: #555; display: block; padding: 8px 10px; border-radius: 5px; transition: background-color 0.2s; }
+        .date-nav a:hover { background-color: #fce4ec; }
+        .timeline-gallery { flex-grow: 1; padding-left: 40px; }
+        .year-group h2 { font-size: 2.5em; color: #333; text-align: center; margin: 60px 0 30px 0; border-bottom: 2px solid #e91e63; padding-bottom: 10px; display: inline-block; }
+        .month-group h3 { font-size: 1.8em; color: #555; margin: 40px 0 20px 0; padding-left: 15px; border-left: 4px solid #f06292; text-align: left; display: block; border-bottom: none; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .photo-item { text-align: center; }
+        .photo-card { background-color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .photo-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+        .photo-card img { width: 100%; height: auto; display: block; }
+        .photo-item .caption { padding: 15px 5px; font-size: 1em; color: #555; }
+        .caption .date { font-weight: bold; color: #333; display: block; margin-bottom: 5px; }
     </style>
 </head>
+
 <body>
+    <nav class="main-nav">
+        <div class="nav-logo"><a href="index.html">Our Love Story</a></div>
+        <div class="nav-links"><ul><li><a href="index.html">首页</a></li><li><a href="gallery.html" class="active">照片墙</a></li></ul></div>
+    </nav>
+    
+    <div class="gallery-header"><h1>我们的日子</h1><p>每一张照片，都是一个我们的故事。</p></div>
 
-    <div class="gallery-header">
-        <h1>我们的甜蜜瞬间</h1>
-        <p>每一张照片，都是一个爱的故事。</p>
-        <a href="index.html" class="back-link">返回首页</a>
+    {% assign photos = site.data.photos | sort: "date" | reverse %}
+    {% assign photos_by_year = photos | group_by_exp: "photo", "photo.date | slice: 0, 4" %}
+
+    <div class="page-container">
+        <aside class="date-nav">
+            <h4>时光目录</h4>
+            <ul>
+                {% for year in photos_by_year %}
+                    <li class="year-link"><a href="#year-{{ year.name }}">{{ year.name }}年</a></li>
+                    <ul>
+                        {% assign photos_by_month = year.items | group_by_exp: "photo", "photo.date | slice: 5, 2" %}
+                        {% for month in photos_by_month %}
+                            <li class="month-link"><a href="#month-{{ year.name }}-{{ month.name }}">{{ month.name | plus: 0 }}月</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <div class="timeline-gallery">
+            {% for year in photos_by_year %}
+                <div class="year-group" id="year-{{ year.name }}">
+                    <div style="text-align: center;"><h2>{{ year.name }}年</h2></div>
+                    {% assign photos_by_month = year.items | group_by_exp: "photo", "photo.date | slice: 5, 2" %}
+                    {% for month in photos_by_month %}
+                        <div class="month-group" id="month-{{ year.name }}-{{ month.name }}">
+                            <h3>{{ month.name | plus: 0 }}月</h3>
+                            <div class="gallery-grid">
+                                {% for photo in month.items %}
+                                    <div class="photo-item">
+                                        <div class="photo-card"><img src="{{ photo.image }}" alt="{{ photo.description | truncate: 20 }}"></div>
+                                        <div class="caption">
+                                            <span class="date">{{ photo.date }}</span>
+                                            <p>{{ photo.description }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
-    <div class="gallery-grid">
-        <div class="photo-card">
-            <img src="images/your-photo-1.jpg" alt="我们的照片1">
-            <div class="caption">
-                <p>2023.05.20 - 第一次一起去海边，风很甜。</p>
-            </div>
-        </div>
-
-        <div class="photo-card">
-            <img src="images/your-photo-2.jpg" alt="我们的照片2">
-            <div class="caption">
-                <p>为我做的爱心早餐！</p>
-            </div>
-        </div>
-
-        <div class="photo-card">
-            <img src="images/your-photo-3.png" alt="我们的照片3">
-            <div class="caption">
-                <p>纪念日收到的花~</p>
-            </div>
-        </div>
-
-        <div class="photo-card">
-            <img src="images/another-photo.jpeg" alt="我们的照片4">
-            <div class="caption">
-                <p>一起看电影的票根。</p>
-            </div>
-        </div>
-
-        </div>
-
 </body>
 </html>

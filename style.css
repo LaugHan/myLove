@@ -1,3 +1,67 @@
+/* --- 导航栏样式 --- */
+.main-nav {
+    position: fixed; /* 固定在页面顶部 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
+    backdrop-filter: blur(10px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between; /* 两端对齐 */
+    align-items: center;
+    height: 60px;
+    z-index: 1000; /* 确保在最上层 */
+    box-sizing: border-box;
+}
+
+.nav-logo a {
+    text-decoration: none;
+    color: #e91e63;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #fce4ec; /* 鼠标悬停时的淡粉色背景 */
+    color: #e91e63;
+}
+
+/* 当前激活页面的链接样式 */
+.nav-links a.active {
+    background-color: #e91e63;
+    color: white;
+}
+
+/* --- 页面内容适应导航栏 --- */
+/* 因为导航栏是固定的，会遮挡内容，所以需要给页面主体一个上边距 */
+body {
+    padding-top: 60px; /* 这个值等于导航栏的高度 */
+}
+
 /* 全局样式和背景 */
 body {
     margin: 0;

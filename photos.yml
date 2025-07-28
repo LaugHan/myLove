@@ -1,0 +1,21 @@
+# 这是你们所有照片的清单
+# 以后只需要在这里添加新照片信息即可
+# 格式：- image: "图片路径"
+#        date: "YYYY-MM-DD"  <-- 日期格式务必是 年-月-日
+#        description: "照片描述"
+
+- image: "images/your-photo-3.png"
+  date: "2025-07-28"
+  description: "纪念日收到的花~"
+
+- image: "images/another-photo.jpeg"
+  date: "2024-10-01"
+  description: "一起看电影的票根，是《XXX》哦！"
+
+- image: "images/your-photo-2.jpg"
+  date: "2023-08-15"
+  description: "为我做的爱心早餐！味道超棒！"
+
+- image: "images/your-photo-1.jpg"
+  date: "2023-05-20"
+  description: "第一次一起去海边，风很甜。"
